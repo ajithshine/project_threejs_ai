@@ -18,6 +18,8 @@ const Customizer = () => {
   const [prompt, setPrompt] = useState('');
   const [generatingImg, setGeneratingImg] = useState(false);
 
+  const [scale, setScale] = useState(false);
+
   const [activeEditorTab, setActiveEditorTab] = useState("");
   const [activeFilterTab, setActiveFilterTab] = useState({
     logoShirt: true,
@@ -116,6 +118,12 @@ const Customizer = () => {
       })
   }
 
+  const showScale = () => {
+    setScale(prevState => !prevState);
+    state.scale = scale
+  };
+  
+
   return (
     <AnimatePresence>
       {!snap.intro && (
@@ -146,13 +154,13 @@ const Customizer = () => {
           >
             <CustomButton 
               type="filled"
-              title="Go Back"
-              handleClick={() => state.intro = true}
+              title={scale ? "Hide scale" : "Show scale"}
+              handleClick={showScale}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
             />
           </motion.div>
 
-          <motion.div
+          {/* <motion.div
             className='filtertabs-container'
             {...slideAnimation("up")}
           >
@@ -165,7 +173,7 @@ const Customizer = () => {
                 handleClick={() => handleActiveFilterTab(tab.name)}
               />
             ))}
-          </motion.div>
+          </motion.div> */}
         </>
       )}
     </AnimatePresence>

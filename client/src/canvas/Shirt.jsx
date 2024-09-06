@@ -3,6 +3,7 @@ import { easing } from 'maath';
 import { useSnapshot } from 'valtio';
 import { useFrame } from '@react-three/fiber';
 import { Decal, useGLTF, useTexture } from '@react-three/drei';
+import * as THREE from 'three';
 
 import state from '../store';
 
@@ -13,7 +14,16 @@ const Shirt = () => {
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
-  useFrame((state, delta) => easing.dampC(materials.lambert1.color, snap.color, 0.25, delta));
+  // const targetColor = new THREE.Color(snap.color);
+
+  // materials.lambert1.color = new THREE.Color('#000000');
+
+  // useFrame((state, delta) => easing.dampC(materials.lambert1.color, new THREE.Color(snap.color), 0.25, delta));
+
+  // useFrame((state, delta) => {
+  //   const targetColor = new THREE.Color(snap.color); // Assuming snap.color is a hex code like '#ff0000'
+  //   materials.lambert1.color.lerp(targetColor, delta * 0.1); // Smooth transition to the new color
+  // });
 
   const stateString = JSON.stringify(snap);
 
@@ -22,7 +32,8 @@ const Shirt = () => {
       <mesh
         castShadow
         geometry={nodes.T_Shirt_male.geometry}
-        material={materials.lambert1}
+        // material={materials.lambert1}
+        material-color={new THREE.Color(snap.color)}
         material-roughness={1}
         dispose={null}
       >
@@ -41,7 +52,7 @@ const Shirt = () => {
             rotation={[0, 0, 0]}
             scale={0.15}
             map={logoTexture}
-            map-anisotropy={16}
+            // map-anisotropy={16}
             depthTest={false}
             depthWrite={true}
           />
